@@ -5,7 +5,7 @@ variable "source_repo_branch" {
 }
 
 variable "project_name" {
-  description = "Source repo name"
+  description = "Source repository names / resources names"
   type        = string
   default     = null
 }

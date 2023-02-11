@@ -1,0 +1,40 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:GetObject", "s3:GetObjectVersion", "s3:PutObject",
+        "s3:GetBucketVersioning"
+      ],
+      "Effect": "Allow",
+      "Resource": "${s3_bucket_artifact_arn}/*"
+    },
+    {
+      "Action" : [
+        "codebuild:StartBuild", "codebuild:BatchGetBuilds",
+        "cloudformation:*",
+        "iam:PassRole"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Action" : [
+        "ecs:*"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Action" : [
+        "codecommit:CancelUploadArchive",
+        "codecommit:GetBranch",
+        "codecommit:GetCommit",
+        "codecommit:GetUploadArchiveStatus",
+        "codecommit:UploadArchive"
+      ],
+      "Effect": "Allow",
+      "Resource": "${codecommit_arn}"
+    }
+  ]
+}
