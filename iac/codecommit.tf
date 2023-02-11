@@ -5,7 +5,7 @@
 # Repository
 
 resource "aws_codecommit_repository" "aws_codecommit_repository" {
-  repository_name = "PetClinicApplication"
+  repository_name = var.project_name
   description     = "Pet Clinic Application Repository"
   tags            = merge(local.common_tags, local.workspace)
 }
@@ -16,7 +16,7 @@ data "template_file" "template_file_trigger_pipeline" {
   template = file("./templates/codecommit/CodeCommitTriggerPipelinePolicy.json")
   vars = {
     # pipeline_arn = "${aws_codepipeline.pipeline.arn}"
-    pipeline_arn = "dummy"
+    pipeline_arn = "*"
   }
 }
 
@@ -58,7 +58,7 @@ resource "aws_cloudwatch_event_rule" "aws_cloudwatch_event_rule" {
 
 # resource "aws_cloudwatch_event_target" "aws_cloudwatch_event_target" {
 #   rule      = aws_cloudwatch_event_rule.aws_cloudwatch_event_rule.name
-#   target_id = "${var.source_repo_name}-${var.source_repo_branch}-pipeline"
+#   target_id = "${var.project_name}-${var.source_repo_branch}-pipeline"
 #   arn       = aws_codepipeline.pipeline.arn
 #   role_arn = aws_iam_role.aws_iam_role_trigger_pipeline.arn
 # }

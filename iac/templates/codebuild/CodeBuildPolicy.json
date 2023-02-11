@@ -1,0 +1,46 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents",
+        "ecr:GetAuthorizationToken"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Action": [
+        "s3:GetObject", "s3:GetObjectVersion", "s3:PutObject"
+      ],
+      "Effect": "Allow",
+      "Resource": "${s3_bucket_artifact_arn}/*"
+    },
+    {
+      "Action": [
+        "s3:GetObject", "s3:GetObjectVersion", "s3:PutObject"
+      ],
+      "Effect": "Allow",
+      "Resource": "${s3_bucket_cache_arn}/*"
+    },
+    {
+      "Action": [
+        "ecr:GetDownloadUrlForLayer", "ecr:BatchGetImage",
+        "ecr:BatchCheckLayerAvailability", "ecr:PutImage",
+        "ecr:InitiateLayerUpload", "ecr:UploadLayerPart",
+        "ecr:CompleteLayerUpload"
+      ],
+      "Effect": "Allow",
+      "Resource": "${ecr_repository_arn}"
+    },
+    {
+      "Action": [
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ecr:BatchCheckLayerAvailability"
+      ],
+      "Effect": "Allow",
+      "Resource": "${ecr_repository_arn}"
+    }
+  ]
+}
