@@ -1,5 +1,5 @@
 # codecommit
-source_repo_branch = "main"
+source_repo_branch = "master"
 project_name       = "pet-clinic-application"
 
 #codebuild
