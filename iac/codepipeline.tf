@@ -32,7 +32,7 @@ resource "aws_iam_role_policy_attachment" "aws_iam_role_policy_attachment_pipeli
 
 # Code Pipeline
 
-resource "aws_codepipeline" "codepipeline" {
+resource "aws_codepipeline" "aws_codepipeline" {
   name     = var.project_name
   role_arn = aws_iam_role.aws_iam_role_pipeline.arn
 
