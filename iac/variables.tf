@@ -28,3 +28,38 @@ variable "family" {
   default     = "petclinic"
 }
 
+variable "cidr_block" {
+  description = "Classless Inter-Domain Routing range of the VPC"
+  type        = string
+  default     = null
+}
+
+variable "public_cidr" {
+  description = "List of public cidr blocks"
+  type        = map(any)
+  default     = null
+}
+
+variable "private_cidr" {
+  description = "List of private cidr blocks"
+  type        = map(any)
+  default     = null
+}
+
+variable "gateway_endpoint_services" {
+  description = "List of gateway endpoint"
+  type        = list(any)
+  default     = null
+}
+
+variable "gateway_endpoint_interface" {
+  description = "List of interface endpoint"
+  type        = list(any)
+  default     = null
+}
+
+variable "endpoint_interface_ports" {
+  description = "List of interface endpoint ports"
+  type        = list(any)
+  default     = null
+}

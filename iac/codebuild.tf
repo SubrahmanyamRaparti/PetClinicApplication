@@ -64,10 +64,10 @@ data "template_file" "template_file_buildspec" {
 }
 
 resource "aws_codebuild_project" "aws_codebuild_project" {
-  depends_on = [
-    aws_codecommit_repository.aws_codecommit_repository,
-    aws_ecr_repository.aws_ecr_repository
-  ]
+  # depends_on = [
+  #   aws_codecommit_repository.aws_codecommit_repository,
+  #   aws_ecr_repository.aws_ecr_repository
+  # ]
 
   name           = var.project_name
   description    = "Build the source code"
@@ -123,20 +123,6 @@ resource "aws_codebuild_project" "aws_codebuild_project" {
     buildspec       = data.template_file.template_file_buildspec.rendered
 
   }
-
-  #   vpc_config {
-  #     vpc_id = aws_vpc.example.id
-
-  #     subnets = [
-  #       aws_subnet.example1.id,
-  #       aws_subnet.example2.id,
-  #     ]
-
-  #     security_group_ids = [
-  #       aws_security_group.example1.id,
-  #       aws_security_group.example2.id,
-  #     ]
-  #   }
 
   tags = merge(local.common_tags, local.workspace)
 }
