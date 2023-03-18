@@ -14,9 +14,31 @@ resource "aws_security_group" "aws_security_group_endpoint" {
       from_port   = port.value
       to_port     = port.value
       protocol    = "tcp"
-      cidr_blocks = [aws_subnet.aws_subnet_private["A"].cidr_block, 
+      cidr_blocks = [aws_subnet.aws_subnet_private["A"].cidr_block,
       aws_subnet.aws_subnet_private["B"].cidr_block]
     }
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = merge(local.common_tags, local.workspace)
+}
+
+resource "aws_security_group" "aws_security_group_database" {
+  name        = "${var.project_name}-database"
+  description = "Allow inbound traffic for MYSQL RDS"
+  vpc_id      = aws_vpc.aws_vpc.id
+  ingress {
+    description = "TLS from VPC"
+    from_port   = var.db_port
+    to_port     = var.db_port
+    protocol    = "tcp"
+    cidr_blocks = [aws_vpc.aws_vpc.cidr_block]
   }
 
   egress {

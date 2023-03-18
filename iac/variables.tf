@@ -63,3 +63,33 @@ variable "endpoint_interface_ports" {
   type        = list(any)
   default     = null
 }
+
+variable "database_username" {
+  description = "Name of the database username"
+  type        = string
+  default     = null
+}
+
+variable "db_instance_type" {
+  description = "Database instance type"
+  type        = string
+  default     = null
+}
+
+variable "storage_type" {
+  description = "Database storage type"
+  type        = map(any)
+  default     = null
+}
+
+variable "db_availability_zone" {
+  description = "Database availability zone"
+  type        = string
+  default     = null
+}
+
+variable "db_port" {
+  description = "Database port"
+  type        = number
+  default     = 3306
+}
