@@ -5,6 +5,7 @@ project_name       = "pet-clinic-application"
 # codebuild
 s3_bucket_cache_name    = "pet-clinic-application-build-cache"
 s3_bucket_artifact_name = "pet-clinic-application-build-artifact"
+s3_bucket_alb_name      = "pet-clinic-application-alb"
 
 # VPC
 cidr_block = "10.0.0.0/16" # Total 65,536 IPs
@@ -22,9 +23,9 @@ gateway_endpoint_interface = ["ecr.api", "ecr.dkr"]
 endpoint_interface_ports = [443]
 
 # RDS
-database_username    = "awsnode"
-db_availability_zone = "ap-south-1a"
-db_instance_type     = "db.t3.micro"
+database_username     = "awsnode"
+db_availability_zones = ["ap-south-1a", "ap-south-1b"]
+db_instance_type      = "db.t3.micro"
 storage_type = {
   production  = "io1"
   development = "gp2"
