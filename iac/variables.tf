@@ -22,6 +22,12 @@ variable "s3_bucket_artifact_name" {
   default     = null
 }
 
+variable "s3_bucket_alb_name" {
+  description = "Bucket stores build artifacts in S3"
+  type        = string
+  default     = null
+}
+
 variable "family" {
   description = "Family of the Task Definition"
   type        = string
@@ -82,9 +88,9 @@ variable "storage_type" {
   default     = null
 }
 
-variable "db_availability_zone" {
+variable "db_availability_zones" {
   description = "Database availability zone"
-  type        = string
+  type        = list(any)
   default     = null
 }
 
@@ -92,4 +98,34 @@ variable "db_port" {
   description = "Database port"
   type        = number
   default     = 3306
+}
+
+variable "fargate_cpu" {
+  description = "Fargate CPU"
+  type        = string
+  default     = "1024"
+}
+
+variable "fargate_memory" {
+  description = "Fargate Memory"
+  type        = string
+  default     = "2048"
+}
+
+variable "container_port" {
+  description = "Container Port"
+  type        = number
+  default     = 8080
+}
+
+variable "cw_log_group" {
+  description = "CloudWatch Log Group"
+  type        = string
+  default     = "GameDay"
+}
+
+variable "cw_log_stream" {
+  description = "CloudWatch Log Stream"
+  type        = string
+  default     = "fargate"
 }

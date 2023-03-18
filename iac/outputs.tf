@@ -14,3 +14,6 @@ output "image_repo_arn" {
   value = aws_ecr_repository.aws_ecr_repository.arn
 }
 
+output "alb_address" {
+  value = aws_lb.aws_lb.dns_name
+}

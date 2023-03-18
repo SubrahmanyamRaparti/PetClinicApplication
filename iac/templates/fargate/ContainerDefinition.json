@@ -1,0 +1,53 @@
+[
+    {
+        "name": "${family}",
+        "image": "${image}",
+        "cpu": ${fargate_cpu},
+        "memory": ${fargate_memory},
+        "portMappings": [
+            {
+                "name": "${family}-${container_port}-tcp",
+                "containerPort": ${container_port},
+                "hostPort": ${container_port},
+                "protocol": "tcp",
+                "appProtocol": "http"
+            }
+        ],
+        "essential": true,
+        "environment": [
+            {
+                "name": "spring.datasource.username",
+                "value": "${database_username}"
+            },
+            {
+                "name": "spring.datasource.password",
+                "value": "${database_password}"
+            },
+            {
+                "name": "spring.datasource.initialize",
+                "value": "yes"
+            },
+            {
+                "name": "spring.profiles.active",
+                "value": "${database_profile}"
+            },
+            {
+                "name": "spring.datasource.url",
+                "value": "jdbc:${database_profile}://${database_address}/${database_name}"
+            }
+        ],
+        "environmentFiles": [],
+        "networkMode": "awsvpc",
+        "mountPoints": [],
+        "volumesFrom": [],
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-create-group": "true",
+                "awslogs-group": "${cw_log_group}",
+                "awslogs-region": "${aws_region}",
+                "awslogs-stream-prefix": "${cw_log_stream}"
+            }
+        }
+    }
+]
