@@ -93,8 +93,8 @@ resource "aws_codepipeline" "aws_codepipeline" {
       run_order       = 1
 
       configuration = {
-        ClusterName = "${var.project_name}-cluser"
-        ServiceName = "${var.project_name}-service"
+        ClusterName = var.project_name
+        ServiceName = var.project_name
         FileName : "imagedefinitions.json"
         DeploymentTimeout = "15"
       }

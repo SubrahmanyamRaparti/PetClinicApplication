@@ -19,6 +19,7 @@ resource "aws_vpc" "aws_vpc" {
 resource "aws_subnet" "aws_subnet_public" {
   for_each          = var.public_cidr
   vpc_id            = aws_vpc.aws_vpc.id
+  map_public_ip_on_launch = true
   cidr_block        = each.value[0]
   availability_zone = data.aws_availability_zones.available.names[each.value[1]]
   tags              = merge(local.common_tags, local.workspace, { "Name" = "${var.project_name}-public-${each.key}" })
@@ -91,15 +92,15 @@ resource "aws_vpc_endpoint" "aws_vpc_endpoint_gateway" {
   tags              = merge(local.common_tags, local.workspace, { "Name" = "${var.project_name}-${each.value}-gateway" })
 }
 
-resource "aws_vpc_endpoint" "aws_vpc_endpoint_interface" {
-  for_each            = toset(var.gateway_endpoint_interface)
-  vpc_id              = aws_vpc.aws_vpc.id
-  service_name        = "com.amazonaws.${data.aws_region.current.name}.${each.value}"
-  vpc_endpoint_type   = "Interface"
-  private_dns_enabled = true
-  ip_address_type     = "ipv4"
-  subnet_ids = [aws_subnet.aws_subnet_private["A"].id,
-  aws_subnet.aws_subnet_private["B"].id]
-  security_group_ids = [aws_security_group.aws_security_group_endpoint.id]
-  tags               = merge(local.common_tags, local.workspace, { "Name" = "${var.project_name}-${each.value}-interface" })
-}
+# resource "aws_vpc_endpoint" "aws_vpc_endpoint_interface" {
+#   for_each            = toset(var.gateway_endpoint_interface)
+#   vpc_id              = aws_vpc.aws_vpc.id
+#   service_name        = "com.amazonaws.${data.aws_region.current.name}.${each.value}"
+#   vpc_endpoint_type   = "Interface"
+#   private_dns_enabled = true
+#   ip_address_type     = "ipv4"
+#   subnet_ids = [aws_subnet.aws_subnet_private["A"].id,
+#   aws_subnet.aws_subnet_private["B"].id]
+#   security_group_ids = [aws_security_group.aws_security_group_endpoint.id]
+#   tags               = merge(local.common_tags, local.workspace, { "Name" = "${var.project_name}-${each.value}-interface" })
+# }
