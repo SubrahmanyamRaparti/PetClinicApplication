@@ -8,10 +8,10 @@ resource "aws_s3_bucket" "aws_s3_bucket_artifact" {
   bucket = var.s3_bucket_artifact_name
 }
 
-resource "aws_s3_bucket_acl" "aws_s3_bucket_acl_artifact" {
-  bucket = aws_s3_bucket.aws_s3_bucket_artifact.id
-  acl    = "private"
-}
+# resource "aws_s3_bucket_acl" "aws_s3_bucket_acl_artifact" {
+#   bucket = aws_s3_bucket.aws_s3_bucket_artifact.id
+#   acl    = "private"
+# }
 
 # S3 Bucket Cache
 
@@ -19,10 +19,10 @@ resource "aws_s3_bucket" "aws_s3_bucket_cache" {
   bucket = var.s3_bucket_cache_name
 }
 
-resource "aws_s3_bucket_acl" "aws_s3_bucket_acl_cache" {
-  bucket = aws_s3_bucket.aws_s3_bucket_cache.id
-  acl    = "private"
-}
+# resource "aws_s3_bucket_acl" "aws_s3_bucket_acl_cache" {
+#   bucket = aws_s3_bucket.aws_s3_bucket_cache.id
+#   acl    = "private"
+# }
 
 # IAM Policy & Role
 

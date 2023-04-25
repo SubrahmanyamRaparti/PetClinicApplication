@@ -8,10 +8,10 @@ resource "aws_s3_bucket" "aws_s3_bucket_alb" {
   bucket = var.s3_bucket_alb_name
 }
 
-resource "aws_s3_bucket_acl" "aws_s3_bucket_acl_alb" {
-  bucket = aws_s3_bucket.aws_s3_bucket_cache.id
-  acl    = "private"
-}
+# resource "aws_s3_bucket_acl" "aws_s3_bucket_acl_alb" {
+#   bucket = aws_s3_bucket.aws_s3_bucket_alb.id
+#   acl    = "private"
+# }
 
 # ALB
 
