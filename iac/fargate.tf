@@ -64,9 +64,9 @@ resource "aws_ecs_service" "aws_ecs_service" {
 
   network_configuration {
     security_groups = [aws_security_group.aws_security_group_ecs.id]
-    subnets = [aws_subnet.aws_subnet_public["A"].id,
-    aws_subnet.aws_subnet_public["B"].id]
-    assign_public_ip = true # If you have a Fargate task in a public subnet, then verify that your task has an assigned public IP address
+    subnets = [aws_subnet.aws_subnet_private["A"].id,
+    aws_subnet.aws_subnet_private["B"].id]
+    assign_public_ip = false # If you have a Fargate task in a public subnet, then verify that your task has an assigned public IP address
   }
 
   load_balancer {

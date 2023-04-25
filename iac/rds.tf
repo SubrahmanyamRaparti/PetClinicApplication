@@ -5,8 +5,8 @@
 # RDS - Subnet Groups
 resource "aws_db_subnet_group" "aws_db_subnet_group" {
   name = var.project_name
-  subnet_ids = [aws_subnet.aws_subnet_private["A"].id,
-  aws_subnet.aws_subnet_private["B"].id]
+  subnet_ids = [aws_subnet.aws_subnet_private["C"].id,
+  aws_subnet.aws_subnet_private["D"].id]
 
   tags = merge(local.common_tags, local.workspace)
 }
