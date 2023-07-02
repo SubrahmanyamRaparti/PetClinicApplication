@@ -103,6 +103,54 @@ resource "aws_codebuild_project" "aws_codebuild_project" {
       name  = "CONTAINER_NAME"
       value = var.family
     }
+    environment_variable {
+      name  = "AWS_FARGATE_CPU"
+      value = var.fargate_cpu
+    }
+    environment_variable {
+      name  = "AWS_FARGATE_MEMORY"
+      value = var.fargate_memory
+    }
+    environment_variable {
+      name  = "CONTAINER_PORT"
+      value = var.container_port
+    }
+    environment_variable {
+      name  = "DATABASE_USERNAME"
+      value = var.database_username
+    }
+    environment_variable {
+      name  = "DATABASE_ADDRESS"
+      value = aws_db_instance.aws_db_instance.address
+    }
+    environment_variable {
+      name  = "DATABASE_PROFILE"
+      value = aws_db_instance.aws_db_instance.engine
+    }
+    environment_variable {
+      name  = "DATABASE_NAME"
+      value = var.family
+    }
+    environment_variable {
+      name  = "DATABASE_PASSWORD"
+      value = data.aws_ssm_parameter.dbpassword.value
+    }
+    environment_variable {
+      name  = "CW_LOG_GROUP"
+      value = var.cw_log_group
+    }
+    environment_variable {
+      name  = "CW_LOG_STREAM"
+      value = var.cw_log_stream
+    }
+    environment_variable {
+      name  = "AWS_EXECUTION_ROLE_ARN"
+      value = aws_iam_role.aws_iam_role_fargate.arn
+    }
+    environment_variable {
+      name  = "AWS_ACCOUNT_ID"
+      value = data.aws_caller_identity.current.account_id
+    }
   }
 
   logs_config {

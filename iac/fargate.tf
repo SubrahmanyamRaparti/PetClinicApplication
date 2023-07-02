@@ -56,11 +56,13 @@ resource "aws_ecs_task_definition" "aws_ecs_task_definition" {
 }
 
 resource "aws_ecs_service" "aws_ecs_service" {
-  name            = var.project_name
-  cluster         = aws_ecs_cluster.aws_ecs_cluster.id
-  task_definition = aws_ecs_task_definition.aws_ecs_task_definition.arn
-  desired_count   = 2
-  launch_type     = "FARGATE"
+  name                              = var.project_name
+  cluster                           = aws_ecs_cluster.aws_ecs_cluster.id
+  task_definition                   = aws_ecs_task_definition.aws_ecs_task_definition.arn
+  desired_count                     = 1
+  launch_type                       = "FARGATE"
+  scheduling_strategy               = "REPLICA"
+  health_check_grace_period_seconds = 300
 
   network_configuration {
     security_groups = [aws_security_group.aws_security_group_ecs.id]
@@ -70,12 +72,31 @@ resource "aws_ecs_service" "aws_ecs_service" {
   }
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.aws_lb_target_group.arn
+    target_group_arn = aws_lb_target_group.aws_lb_target_group_blue.arn
     container_name   = var.family
     container_port   = var.container_port
   }
 
-  depends_on = [aws_lb_listener.aws_lb_listener]
+  # Here green TG is considered as a replacement to production. Need NOT be spcified here. We have already specified in Codedeploy resource.
+  # load_balancer {
+  #   target_group_arn = aws_lb_target_group.aws_lb_target_group_green.arn
+  #   container_name   = var.family
+  #   container_port   = var.container_port
+  # }
+
+  deployment_controller {
+    type = "CODE_DEPLOY"
+  }
+
+  depends_on = [aws_lb_listener.aws_lb_listener_blue, aws_lb_listener.aws_lb_listener_green]
+
+  lifecycle {
+    ignore_changes = [
+      load_balancer,
+      desired_count,
+      task_definition
+    ]
+  }
 }
 
 # Cloudwatch Log Group

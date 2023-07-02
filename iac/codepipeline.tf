@@ -70,7 +70,7 @@ resource "aws_codepipeline" "aws_codepipeline" {
       owner            = "AWS"
       provider         = "CodeBuild"
       input_artifacts  = ["source_output"]
-      output_artifacts = ["build_output"]
+      output_artifacts = ["definition_artifact", "image_artifact"]
       version          = "1"
       run_order        = 1
 
@@ -87,16 +87,20 @@ resource "aws_codepipeline" "aws_codepipeline" {
       name            = "Deploy"
       category        = "Deploy"
       owner           = "AWS"
-      provider        = "ECS"
-      input_artifacts = ["build_output"]
+      provider        = "CodeDeployToECS"
+      input_artifacts = ["definition_artifact", "image_artifact"]
       version         = "1"
       run_order       = 1
 
       configuration = {
-        ClusterName = var.project_name
-        ServiceName = var.project_name
-        FileName : "imagedefinitions.json"
-        DeploymentTimeout = "15"
+        ApplicationName                = aws_codedeploy_app.aws_codedeploy_app.name
+        DeploymentGroupName            = aws_codedeploy_deployment_group.aws_codedeploy_deployment_group.deployment_group_name
+        AppSpecTemplateArtifact        = "definition_artifact"
+        AppSpecTemplatePath            = "appspec.yaml"
+        TaskDefinitionTemplateArtifact = "definition_artifact"
+        TaskDefinitionTemplatePath     = "taskdef.json"
+        Image1ArtifactName             = "image_artifact"
+        Image1ContainerName            = "IMAGE1_NAME"
       }
     }
   }

@@ -26,11 +26,32 @@ phases:
       - echo Pushing the Docker image...
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - printf '[{"name":"%s","imageUri":"%s"}]' $CONTAINER_NAME $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-      - cat imagedefinitions.json
+      - printf '{"ImageURI":"%s"}' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json  # https://docs.aws.amazon.com/codepipeline/latest/userguide/file-reference.html#file-reference-ecs-bluegreen
+      - cat imageDetail.json
       - docker logout
+      - echo ******* BEFORE TASK DEFINITION TEMPLATE *******
+      - cat taskdef.json.tpl
+      - envsubst < taskdef.json.tpl > taskdef.json
+      - echo ******* TASK DEFINITION *******
+      - cat taskdef.json
+      - echo ******* BEFORE APP SPEC TEMPLATE *******
+      - cat appspec.yaml.tpl
+      - envsubst < appspec.yaml.tpl > appspec.yaml
+      - echo ******* APP SPEC DEFINITION *******
+      - cat appspec.yaml
 artifacts:
-    files: imagedefinitions.json
+    files: 
+    - imageDetail.json
+    - appspec.yaml
+    - taskdef.json
+    secondary-artifacts:
+      definition_artifact:
+        files:
+        - appspec.yaml
+        - taskdef.json
+      image_artifact:
+        files:
+        - imageDetail.json
 cache:
   paths:
     - '/root/.m2/**/*'

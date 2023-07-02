@@ -7,6 +7,8 @@ terraform {
   }
 }
 
+provider "aws" {}
+
 data "aws_region" "current" {} # Get the AWS region
 
 data "aws_caller_identity" "current" {} # Get AWS account ID
