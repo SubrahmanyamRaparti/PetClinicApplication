@@ -35,6 +35,23 @@
       ],
       "Effect": "Allow",
       "Resource": "${codecommit_arn}"
+    },
+    {
+      "Effect" : "Allow",
+      "Action" : [
+        "codedeploy:GetApplication",
+        "codedeploy:GetApplicationRevision",
+        "codedeploy:CreateDeployment",
+        "codedeploy:GetDeploymentConfig",
+        "codedeploy:RegisterApplicationRevision",
+        "codedeploy:GetDeployment"
+      ],
+      "Resource" : "*"
+    },
+    {
+        "Action": "elasticloadbalancingv2:*",
+        "Effect": "Allow",
+        "Resource": "*"
     }
   ]
 }

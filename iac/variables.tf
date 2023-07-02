@@ -103,13 +103,13 @@ variable "db_port" {
 variable "fargate_cpu" {
   description = "Fargate CPU"
   type        = string
-  default     = "1024"
+  default     = "512"
 }
 
 variable "fargate_memory" {
   description = "Fargate Memory"
   type        = string
-  default     = "2048"
+  default     = "1024"
 }
 
 variable "container_port" {

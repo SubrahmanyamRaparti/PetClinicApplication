@@ -7,6 +7,7 @@
 resource "aws_codecommit_repository" "aws_codecommit_repository" {
   repository_name = var.project_name
   description     = "Pet Clinic Application Repository"
+  default_branch = var.source_repo_branch
   tags            = merge(local.common_tags, local.workspace)
 }
 
@@ -44,6 +45,7 @@ data "template_file" "template_file_event_pattern" {
   vars = {
     repository_arn = aws_codecommit_repository.aws_codecommit_repository.arn
     branch_name    = var.source_repo_branch
+    default_branch = var.source_repo_branch
   }
 }
 
